@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: medical-bot
+    env: python
+    region: frankfurt  # أو singapore أو oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
