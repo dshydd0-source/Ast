@@ -136,3 +136,20 @@ def get_admin_info(admin_id):
     if admin_id_str in cache.admins["admins"]:
         return cache.admins["admins"][admin_id_str]
     return None
+
+def check_admin_status(user_id):
+    """تصحيح حالة الأدمن"""
+    user_id_str = str(user_id)
+    super_admin_id = str(SUPER_ADMIN_ID)
+    
+    print(f"\n🔍 تصحيح صلاحيات المستخدم {user_id}:")
+    print(f"   - SUPER_ADMIN_ID في config: {super_admin_id}")
+    print(f"   - هو أدمن رئيسي: {user_id_str == super_admin_id}")
+    print(f"   - هو أدمن عادي: {is_admin(user_id)}")
+    
+    if user_id_str == super_admin_id:
+        print("   ✅ يجب يظهر له قائمة الأدمنز!")
+    else:
+        print("   ❌ ما راح يظهر له قائمة الأدمنز")
+    
+    return user_id_str == super_admin_id
