@@ -182,3 +182,40 @@ def debug_super_admin():
         print(f"   ⚠️ خطأ في المقارنة: {e}")
     
     print("="*50)
+def verify_admin_setup():
+    """التحقق من إعداد الأدمن"""
+    import json
+    import os
+    
+    print("\n🔍 التحقق من إعداد الأدمن:")
+    
+    # 1. قراءة الملف
+    admins_file = 'data/admins.json'
+    if not os.path.exists(admins_file):
+        print("   ❌ ملف admins.json غير موجود!")
+        return False
+    
+    try:
+        with open(admins_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # 2. التحقق من ID
+        super_admin_id = str(SUPER_ADMIN_ID)
+        print(f"   ✅ الملف موجود")
+        print(f"   📋 IDs في الملف: {list(data.get('admins', {}).keys())}")
+        print(f"   👑 SUPER_ADMIN_ID: {super_admin_id}")
+        
+        # 3. التحقق إذا ID موجود
+        if super_admin_id in data.get('admins', {}):
+            admin_info = data['admins'][super_admin_id]
+            print(f"   ✅ ID موجود في الملف")
+            print(f"   👤 الاسم: {admin_info.get('name', 'غير معروف')}")
+            print(f"   ⚡ الصلاحيات: {admin_info.get('permissions', {})}")
+            return True
+        else:
+            print(f"   ❌ ID غير موجود في الملف!")
+            return False
+            
+    except Exception as e:
+        print(f"   ❌ خطأ في قراءة الملف: {e}")
+        return False
