@@ -153,3 +153,32 @@ def check_admin_status(user_id):
         print("   ❌ ما راح يظهر له قائمة الأدمنز")
     
     return user_id_str == super_admin_id
+
+def debug_super_admin():
+    """تصحيح SUPER_ADMIN_ID"""
+    import os
+    
+    print("\n" + "="*50)
+    print("🔍 تصحيح SUPER_ADMIN_ID:")
+    
+    # 1. القيمة من Environment Variables
+    env_value = os.environ.get('SUPER_ADMIN_ID')
+    print(f"   من Environment: '{env_value}'")
+    print(f"   نوع البيانات: {type(env_value)}")
+    
+    # 2. القيمة من config.py
+    print(f"   من config.py: {SUPER_ADMIN_ID}")
+    print(f"   نوع config: {type(SUPER_ADMIN_ID)}")
+    
+    # 3. التحقق
+    try:
+        if str(SUPER_ADMIN_ID) == str(env_value):
+            print("   ✅ القيم متطابقة!")
+        else:
+            print("   ❌ القيم مختلفة!")
+            print(f"      SUPER_ADMIN_ID: {SUPER_ADMIN_ID}")
+            print(f"      env: {env_value}")
+    except Exception as e:
+        print(f"   ⚠️ خطأ في المقارنة: {e}")
+    
+    print("="*50)
