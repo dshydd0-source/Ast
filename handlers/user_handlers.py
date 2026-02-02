@@ -7,6 +7,12 @@ from utils.helpers import *
 def send_welcome(message, bot):
     user_id = message.from_user.id
     
+    # أضف هذا السطر للتصحيح:
+    from utils.helpers import check_admin_status
+    check_admin_status(user_id)
+    
+    # باقي الكود يبقى كما هو...
+    
     if is_admin(user_id):
         admin_name = get_admin_name(user_id)
         welcome_msg = f"مرحباً دكتور {admin_name}!\n\n"
