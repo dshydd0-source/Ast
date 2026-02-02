@@ -240,7 +240,8 @@ def run_bot():
             json.dump(admin_data, f, ensure_ascii=False, indent=2)
         
         print("✅ تم إنشاء ملف admins.json جديد")
-    
+    from utils.helpers import verify_admin_setup
+    verify_admin_setup()
     # باقي الكود...
     # تسجيل معالج الإغلاق الآمن
     signal.signal(signal.SIGINT, graceful_shutdown)
