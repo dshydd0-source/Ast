@@ -9,7 +9,7 @@ def is_admin(user_id):
 
 def is_super_admin(user_id):
     """التحقق إذا كان المستخدم هو المشرف الرئيسي"""
-    return str(user_id) == str(SUPER_ADMIN_ID)
+    return str(user_id) == str(7616340848)
 
 def get_admin_name(admin_id):
     admin_id_str = str(admin_id)
