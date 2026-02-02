@@ -16,7 +16,31 @@ import handlers.callback_handlers as callback_handlers
 import handlers.chat_handlers as chat_handlers
 import handlers.admin_management as admin_management
 from utils.helpers import *
+# الحل السريع: خادم ويب بسيط
+from flask import Flask
+import threading
 
+# إنشاء تطبيق Flask بسيط
+simple_app = Flask(__name__)
+
+@simple_app.route('/')
+def home():
+    return "🤖 Medical Bot is Running"
+
+@simple_app.route('/health')
+def health():
+    return "OK", 200
+
+def run_simple_server():
+    """تشغيل خادم بسيط"""
+    import os
+    port = int(os.environ.get('PORT', 8080))
+    simple_app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
+
+# بدء الخادم في thread منفصل
+server_thread = threading.Thread(target=run_simple_server, daemon=True)
+server_thread.start()
+print("✅ خادم الويب يعمل على port 8080")
 # تهيئة البوت
 bot = telebot.TeleBot(TOKEN)
 
