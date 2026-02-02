@@ -187,6 +187,61 @@ def graceful_shutdown(signum, frame):
 
 def run_bot():
     """تشغيل البوت مع معالجة الأخطاء"""
+    
+    # أضف هذا الكود - سيحذف admins.json ويجددها
+    import os
+    import json
+    
+    admins_file = 'data/admins.json'
+    super_admin_id = os.environ.get('SUPER_ADMIN_ID', '123456789')
+    
+    if os.path.exists(admins_file):
+        print(f"📁 ملف admins.json موجود، جاري التحقق...")
+        
+        try:
+            with open(admins_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            # إذا ID الأدمن الرئيسي مو موجود، احذف الملف
+            if super_admin_id not in data.get('admins', {}):
+                print(f"❌ ID {super_admin_id} غير موجود، جاري حذف الملف...")
+                os.remove(admins_file)
+                print("✅ تم حذف admins.json")
+        except:
+            print("⚠️ خطأ في قراءة الملف، جاري حذفه...")
+            os.remove(admins_file)
+    
+    # إذا الملف مش موجود، أنشئ واحد جديد
+    if not os.path.exists(admins_file):
+        print(f"🆕 إنشاء ملف admins.json جديد للـ ID: {super_admin_id}")
+        os.makedirs('data', exist_ok=True)
+        
+        admin_data = {
+            "admins": {
+                super_admin_id: {
+                    "name": "المشرف الرئيسي",
+                    "active": True,
+                    "added_by": "system",
+                    "added_date": "2024-01-01T00:00:00",
+                    "permissions": {
+                        "can_view_consultations": True,
+                        "can_reply_consultations": True,
+                        "can_accept_chats": True,
+                        "can_manage_admins": True
+                    }
+                }
+            },
+            "admin_names": {
+                "المشرف الرئيسي": super_admin_id
+            }
+        }
+        
+        with open(admins_file, 'w', encoding='utf-8') as f:
+            json.dump(admin_data, f, ensure_ascii=False, indent=2)
+        
+        print("✅ تم إنشاء ملف admins.json جديد")
+    
+    # باقي الكود...
     # تسجيل معالج الإغلاق الآمن
     signal.signal(signal.SIGINT, graceful_shutdown)
     signal.signal(signal.SIGTERM, graceful_shutdown)
