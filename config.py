@@ -15,4 +15,4 @@ AUTO_SAVE_INTERVAL = 30  # ثانية
 
 # إعدادات الأدمنز
 # الحصول من متغير البيئة أو استخدام الافتراضي
-SUPER_ADMIN_ID = int(os.environ.get('SUPER_ADMIN_ID', '123456789'))
+SUPER_ADMIN_ID = int(os.environ.get('SUPER_ADMIN_ID', '7616340848'))
