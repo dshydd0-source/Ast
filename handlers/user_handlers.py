@@ -7,11 +7,16 @@ from utils.helpers import *
 def send_welcome(message, bot):
     user_id = message.from_user.id
     
-    # أضف هذا السطر للتصحيح:
-    from utils.helpers import check_admin_status
-    check_admin_status(user_id)
+    # أضف هذه السطور للتصحيح
+    from utils.helpers import debug_super_admin, is_super_admin
+    debug_super_admin()
     
-    # باقي الكود يبقى كما هو...
+    print(f"\n🔍 التحقق من صلاحيات {user_id}:")
+    print(f"   هو super admin: {is_super_admin(user_id)}")
+    print(f"   SUPER_ADMIN_ID: {SUPER_ADMIN_ID}")
+    print(f"   user_id: {user_id}")
+    
+    # باقي الكود...
     
     if is_admin(user_id):
         admin_name = get_admin_name(user_id)
